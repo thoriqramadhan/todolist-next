@@ -1,14 +1,13 @@
 import { cn } from '@/lib/utils';
-import { ListTodo } from 'lucide-react';
+import { ListTodo, LucideProps } from 'lucide-react';
 import { FC } from 'react';
 
-interface AppIconProps {
+interface AppIconProps extends LucideProps {
     classNames?: string,
-    size: number
 }
 
-const AppIcon: FC<AppIconProps> = ({ classNames, size, ...props }) => {
-    return <ListTodo className={cn(classNames)} {...props} size={size} />;
+const AppIcon: FC<AppIconProps> = ({ classNames, ...props }) => {
+    return <ListTodo className={cn(classNames)} {...props} />;
 }
 
 export default AppIcon;

@@ -1,6 +1,6 @@
 import * as React from "react"
-
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
+import { FC } from "react"
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {
@@ -19,4 +19,8 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
 )
 Input.displayName = "Input"
 
+
+export const ErrorInput: FC<ComponetsWithChild> = ({ children, className, ...props }) => {
+  return <p className={cn('text-xs text-red-400', className)} {...props}>{children}</p>;
+};
 export { Input }
