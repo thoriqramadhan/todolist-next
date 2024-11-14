@@ -39,13 +39,13 @@ const Page: FC<PageProps> = ({ }) => {
                     <CardContent className='space-y-3 flex-1 md:flex-none'>
                         <Label htmlFor="username" className='text-lg font-medium block'>Username</Label>
                         <Input type='text' name='username' id='username' autoComplete='off' placeholder='User' required value={username} onChange={(e) => setUsername(e.target.value)} />
-                        {formState?.error?.username && <ErrorInput>{formState?.error?.username}</ErrorInput>}
+                        {formState?.error?.username && <ErrorInput>{formState?.error?.username ?? ''}</ErrorInput>}
                         <Label htmlFor="email" className='text-lg font-medium block'>Email</Label>
                         <Input type='email' name='email' id='email' autoComplete='off' placeholder='user@gmail.com' required value={email} onChange={(e) => setEmail(e.target.value)} />
-                        {formState?.error?.email && <ErrorInput>{formState?.error?.email}</ErrorInput>}
+                        {formState?.error?.email && <ErrorInput>{formState?.error?.email ?? ''}</ErrorInput>}
                         <Label htmlFor="password" className='text-lg font-medium block'>Password</Label>
                         <Input type='password' name='password' id='password' autoComplete='off' required />
-                        {formState?.error?.password && <ErrorInput>{formState?.error?.password}</ErrorInput>}
+                        {formState?.error?.password && <ErrorInput>{formState?.error?.password ?? ''}</ErrorInput>}
                     </CardContent>
                     <CardFooter>
                         <Button className='w-full disabled:cursor-not-allowed' disabled={isPending} >{isPending ? <Loading /> : 'Register'}</Button>

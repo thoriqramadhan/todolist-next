@@ -19,7 +19,6 @@ interface PageProps {
 const Page: FC<PageProps> = ({ }) => {
     const router = useRouter()
     const [formState, formAction, isPending] = useActionState(login, '')
-    const [username, setUsername] = useState<FormRegisterData | string>(formState?.data?.username ?? '')
     const [email, setEmail] = useState<FormRegisterData | string>(formState?.data?.email ?? '')
 
     useEffect(() => {
@@ -39,10 +38,10 @@ const Page: FC<PageProps> = ({ }) => {
                     <CardContent className='space-y-3 flex-1 md:flex-none'>
                         <Label htmlFor="email" className='text-lg font-medium block'>Email</Label>
                         <Input type='email' name='email' id='email' autoComplete='off' placeholder='user@gmail.com' required value={email} onChange={(e) => setEmail(e.target.value)} />
-                        {formState?.error?.email && <ErrorInput>{formState?.error?.email}</ErrorInput>}
+                        {formState?.error?.email && <ErrorInput>{formState?.error?.email ?? ''}</ErrorInput>}
                         <Label htmlFor="password" className='text-lg font-medium block'>Password</Label>
                         <Input type='password' name='password' id='password' autoComplete='off' required />
-                        {formState?.error?.password && <ErrorInput>{formState?.error?.password}</ErrorInput>}
+                        {formState?.error?.password && <ErrorInput>{formState?.error?.password ?? ''}</ErrorInput>}
                     </CardContent>
                     <CardFooter>
                         <Button className='w-full disabled:cursor-not-allowed' disabled={isPending} >{isPending ? <Loading /> : 'Login'}</Button>
