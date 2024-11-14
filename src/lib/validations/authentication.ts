@@ -5,3 +5,8 @@ export const validateUserAuthentication =  z.object({
     email: z.string().email(),
     password: z.string().min(6)
 })
+
+export const validateLoginUser = z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+})
