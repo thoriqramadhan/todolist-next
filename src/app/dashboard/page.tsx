@@ -55,7 +55,7 @@ const Page: FC<PageProps> = ({ }) => {
     }
     return (
         <>
-            <p className='inline-block text-4xl font-semibold mb-5'>Dashboard</p>
+            <p className='text-title'>Dashboard</p>
             <div className='flex-1'>
                 <div className="flex w-full gap-x-5">
                     <StaticCard title='Task Finished' value='10' />

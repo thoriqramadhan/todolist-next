@@ -21,7 +21,7 @@ const AppSidebar: FC<AppSidebarProps> = ({ }) => {
                 {
                     icon: <SmilePlus />,
                     title: 'Add Todo',
-                    link: null
+                    link: '/dashboard/add'
                 },
                 {
                     icon: <BookCheck />,

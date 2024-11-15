@@ -90,4 +90,9 @@ body {
   .transition-300 {
     @apply transition-all duration-300;
   }
+
+  /*  */
+  .text-title{
+    @apply inline-block text-4xl font-semibold mb-5
+  }
 }
