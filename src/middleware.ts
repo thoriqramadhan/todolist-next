@@ -12,10 +12,11 @@ export async function middleware(req: NextRequest) {
 
     const isInPublicRoute = pathname.includes(publicRoute[0]) || pathname.includes(publicRoute[1])
 
-    console.log(isInPublicRoute)
-
     if (!user && !isInPublicRoute) {
         return NextResponse.redirect(new URL('/login' , req.nextUrl))
+    }
+    if (user && isInPublicRoute) {
+        return NextResponse.redirect(new URL('/dashboard' , req.nextUrl))
     }
 
     return NextResponse.next();

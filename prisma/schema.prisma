@@ -22,11 +22,12 @@ model User {
 }
 
 model Todo {
-  id       Int      @id @default(autoincrement())
-  title    String
-  start    DateTime
-  deadline DateTime
-  isDone   Boolean
-  User     User     @relation(fields: [userId], references: [id])
-  userId   Int
+  id         Int      @id @default(autoincrement())
+  title      String
+  start      DateTime
+  deadline   DateTime
+  finishedAt DateTime
+  status     String
+  User       User     @relation(fields: [userId], references: [id])
+  userId     Int
 }

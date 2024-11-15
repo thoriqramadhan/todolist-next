@@ -116,6 +116,6 @@ export async function login(message: string, formState: HTMLFormElement) {
     return {success: true}
 
   } catch (error) {
-    
+    console.log(error)
   }
 }
