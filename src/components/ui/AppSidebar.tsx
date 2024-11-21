@@ -43,7 +43,7 @@ const AppSidebar: FC<AppSidebarProps> = ({ }) => {
                         {
                             sidebarOptions.map(sidebar => (
                                 <>
-                                    <SidebarGroupLabel>{sidebar.label}</SidebarGroupLabel>
+                                    <SidebarGroupLabel key={sidebar.label}>{sidebar.label}</SidebarGroupLabel>
                                     {
                                         (sidebar.item.map(item => (
                                             <SidebarGroupContent key={item.title}>

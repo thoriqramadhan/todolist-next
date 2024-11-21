@@ -15,7 +15,7 @@ const Tab: FC<TabProps> = ({ children }) => {
 }
 
 interface TabOptions extends ComponetsWithChild, ReactElement, Partial<DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>> {
-    isSelected: boolean
+    isSelected: boolean,
 }
 export const TabOptions: FC<TabOptions> = ({ children, isSelected, ...props }) => {
     return (
