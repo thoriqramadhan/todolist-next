@@ -4,8 +4,9 @@ import { prisma } from "../db";
 import { decryptSession } from "../session";
 import { cookies } from "next/headers";
 import { getUserDB } from "@/helpers/dbHelpers";
+import { formatToISO } from "../utils";
 
-const formatToISO = (timestamp) => new Date(timestamp).toISOString().slice(0, 16);
+
 export async function createTodo(test: FormData) {
     try {
         const session = (await cookies()).get('session')

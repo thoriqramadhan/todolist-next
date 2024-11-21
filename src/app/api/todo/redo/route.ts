@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
         if (!id) {
             return new NextResponse('Invalid payload' , {status: 400})
         }
-        const dataToUpdate = {status: 'ongoing'}
+        const dataToUpdate = {status: 'ongoing' , finishedAt: null}
         await updateTodo(id, dataToUpdate)
         return new NextResponse('success updating todo' , {status: 200})
     } catch (error) {

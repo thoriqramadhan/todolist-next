@@ -1,14 +1,35 @@
 'use client'
-import { FC, useEffect, useState } from 'react';
+import { formatDate } from '@/lib/utils';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 
 interface TimerProps {
     startDate: Date,
-    deadline: Date
+    deadline: Date,
+    finishedAt: Date
 }
 
-const Timer: FC<TimerProps> = ({ startDate, deadline }) => {
+const Timer: FC<TimerProps> = ({ startDate, deadline, finishedAt }) => {
     const [timeLeft, setTimeLeft] = useState("")
+    const [isFinished, setisFinished] = useState('')
+    const classInit = 'text-xs mt-2'
+    function formatFinishedAt() {
+        if (!finishedAt) {
+            setisFinished(finishedAt)
+            return;
+        }
+        const formmatedDate = formatDate(new Date(finishedAt))
+        setisFinished(formmatedDate)
+        return;
+    }
     useEffect(() => {
+        formatFinishedAt()
+        console.log('re render cuh');
+
+    }, [finishedAt])
+    useEffect(() => {
+        if (finishedAt) {
+            formatFinishedAt()
+        }
         const deadlineDate = new Date(deadline).getTime()
         const interval = setInterval(() => {
             const now = new Date().getTime()
@@ -27,7 +48,10 @@ const Timer: FC<TimerProps> = ({ startDate, deadline }) => {
         }, 1000)
         return () => clearInterval(interval);
     }, [])
-    return <div className='text-xs text-red-400 mt-2'>{timeLeft}</div>;
+    if (finishedAt) {
+        return <div className={`${classInit} text-green-500`}><span className='text-black'>FinshedAt : </span>{isFinished}</div>
+    }
+    return <div className={`text-red-400 ${classInit}`}>{timeLeft}</div>;
 }
 
 export default Timer;

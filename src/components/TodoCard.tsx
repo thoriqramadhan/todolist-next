@@ -1,7 +1,8 @@
+'use client'
 import { Check, Trash, Undo2 } from 'lucide-react';
 import Timer from './Timer';
-import { Dispatch, FC, SetStateAction } from 'react';
-import { cn } from '@/lib/utils';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { cn, formatDate, formatToISO } from '@/lib/utils';
 interface TodoCardProps {
     todo: {
         id?: number,
@@ -9,12 +10,13 @@ interface TodoCardProps {
         title: string,
         start: Date,
         deadline: Date,
+        finishedAt: Date | null,
         endDate: Date | null
     },
     setter: Dispatch<SetStateAction<never[]>>
 }
 export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
-    const { id, status, title, start, deadline, endDate } = todo;
+    const { id, status, title, start, deadline, endDate, finishedAt } = todo;
     async function deleteHandler() {
         try {
             const response = await fetch('/api/todo/delete', {
@@ -46,6 +48,7 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
             setter(prev => prev.filter(todo => {
                 if (todo.id == id) {
                     todo.status = 'ongoing'
+                    todo.finishedAt = null
                     return todo
                 }
                 return todo
@@ -64,9 +67,11 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
             if (!response.ok) {
                 throw new Error(response.statusText)
             }
+
             setter(prev => prev.filter(todo => {
                 if (todo.id == id) {
                     todo.status = 'finished'
+                    todo.finishedAt = new Date(formatToISO(Date.now()))
                     return todo
                 }
                 return todo
@@ -80,7 +85,7 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
         <div className="w-full">
             <div className="w-full h-28 bg-gra-50 shadow-md p-3 rounded-lg border relative">
                 <h1 className='font-medium tracking-wider mb-1'>{title}  -   <span className={cn('text-xs tracking-widest text-white p-1 rounded-full', { 'bg-green-400': status == 'finished', 'bg-yellow-400': status == 'ongoing' })}>{status}</span></h1>
-                <Timer startDate={start} deadline={deadline} />
+                <Timer startDate={start} deadline={deadline} finishedAt={finishedAt} />
                 {/* <p className='text-xs text-zinc-400'>{formattedStart} - {formattedDeadline}</p> */}
                 <div className="flex absolute top-5 right-3 gap-x-3">
                     {status == 'finished' ? <Undo2 size={20} className='cursor-pointer' onClick={redoHandler} /> : <Check size={20} className='cursor-pointer' onClick={finishHandler} />}

@@ -54,27 +54,24 @@ const Page: FC<PageProps> = ({ }) => {
             ongoing: ongoing.length,
             finished: finished.length
         })
+    }
+    const fetchTodo = async () => {
+        setLoading(true)
+        try {
+            const response = await fetch('/api/todo/get')
+            if (!response.ok) {
+                return new Error('Failed to fetch')
+            }
+            const todo = await response.json()
+            setTodo(todo.todos)
 
-
+        } catch (error) {
+            setLoading(false)
+        } finally {
+            setLoading(false)
+        }
     }
     useEffect(() => {
-        const fetchTodo = async () => {
-            setLoading(true)
-            try {
-                const response = await fetch('/api/todo/get')
-                if (!response.ok) {
-                    return new Error('Failed to fetch')
-                }
-                const todo = await response.json()
-                console.log(todo.todos);
-                setTodo(todo.todos)
-
-            } catch (error) {
-                setLoading(false)
-            } finally {
-                setLoading(false)
-            }
-        }
         fetchTodo()
     }, [])
     useEffect(() => {
@@ -93,7 +90,7 @@ const Page: FC<PageProps> = ({ }) => {
                     <StaticCard title='Task Finished' value={countStatus.finished} />
                     <StaticCard title='Task Ongoing' value={countStatus.ongoing} />
                 </div>
-
+                <ProgressPercentage data={todo} />
                 <Tab className='select-none'>
                     {
                         tabData.map((tab, index) => (
@@ -119,6 +116,29 @@ const Page: FC<PageProps> = ({ }) => {
 }
 
 
+function ProgressPercentage({ data }: { data: TodoData[] }) {
+    const totalData = data.length;
+    const finishedData = data.filter(item => item.status == 'finished');
+    const finishPercentage = Math.floor((finishedData.length / totalData) * 100);
+    let unfinishedPercentage;
+    if (finishPercentage == 0) {
+        unfinishedPercentage = 0;
+    }
+    unfinishedPercentage = Math.floor(100 - finishPercentage);
+
+    return (
+        <Card className="w-[300px] flex flex-col">
+            <CardContent className='px-3 py-5 space-y-3'>
+                <p className='font-medium tracking-wider'>Task Finished</p>
+                <p className='text-2xl font-bold tracking-wide'>{finishPercentage}%</p>
+                <div className="w-full rounded-full overflow-hidden h-[3px] flex">
+                    <div className=" h-[3px] bg-blue-600 inline-block" style={{ width: `${finishPercentage}%` }}></div>
+                    <div className=" h-[3px] bg-gray-50 inline-block" style={{ width: `${unfinishedPercentage}%` }}></div>
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
 function StaticCard({ title, value, ...props }: { title: Date, value: string }) {
     return (
         <>
