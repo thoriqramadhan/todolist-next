@@ -1,5 +1,7 @@
 import { Check, Trash, Undo2 } from 'lucide-react';
 import Timer from './Timer';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { cn } from '@/lib/utils';
 interface TodoCardProps {
     todo: {
         id?: number,
@@ -32,6 +34,27 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
             console.log(error);
         }
     }
+    async function redoHandler() {
+        try {
+            const response = await fetch('/api/todo/redo', {
+                body: JSON.stringify(id)
+            })
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            setter(prev => prev.filter(todo => {
+                if (todo.id == id) {
+                    todo.status = 'ongoing'
+                    return todo
+                }
+                return todo
+            }))
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+    async function finishHandler() { }
     return (
         <div className="w-full">
             <div className="w-full h-28 bg-gra-50 shadow-md p-3 rounded-lg border relative">
@@ -39,8 +62,7 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
                 <Timer startDate={start} deadline={deadline} />
                 {/* <p className='text-xs text-zinc-400'>{formattedStart} - {formattedDeadline}</p> */}
                 <div className="flex absolute top-5 right-3 gap-x-3">
-                    <Check size={20} className='cursor-pointer' />
-                    <Undo2 size={20} className='cursor-pointer' />
+                    {status == 'finished' ? <Undo2 size={20} className='cursor-pointer' onClick={redoHandler} /> : <Check size={20} className='cursor-pointer' onClick={finishHandler} />}
                     <Trash size={20} className='cursor-pointer' onClick={deleteHandler} />
                 </div>
             </div>

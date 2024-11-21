@@ -24,3 +24,16 @@ export async function deleteTodo(id:number) {
         return error
     }
 }
+
+export async function updateTodo(id: number , dataObject: object) {
+    try {
+        await prisma.todo.update({
+            where: {
+                id: id
+            },
+            data: dataObject
+        })
+    } catch (error) {
+        
+    }
+}
