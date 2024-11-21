@@ -37,7 +37,8 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
     async function redoHandler() {
         try {
             const response = await fetch('/api/todo/redo', {
-                body: JSON.stringify(id)
+                method: 'POST',
+                body: JSON.stringify({ id })
             })
             if (!response.ok) {
                 throw new Error(response.statusText)
@@ -54,7 +55,27 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
 
         }
     }
-    async function finishHandler() { }
+    async function finishHandler() {
+        try {
+            const response = await fetch('/api/todo/finish', {
+                method: 'POST',
+                body: JSON.stringify({ id })
+            })
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+            setter(prev => prev.filter(todo => {
+                if (todo.id == id) {
+                    todo.status = 'finished'
+                    return todo
+                }
+                return todo
+            }))
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
     return (
         <div className="w-full">
             <div className="w-full h-28 bg-gra-50 shadow-md p-3 rounded-lg border relative">
