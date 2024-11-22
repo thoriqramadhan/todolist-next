@@ -21,7 +21,7 @@ model User {
   Todo     Todo[]
 }
 
-model Tag {
+model TodoTag {
   id   Int    @id @default(autoincrement())
   name String @unique
   Todo Todo[]
@@ -36,6 +36,6 @@ model Todo {
   status     String
   User       User      @relation(fields: [userId], references: [id])
   userId     Int
-  Tag        Tag?      @relation(fields: [tagId], references: [id])
-  tagId      Int?
+  TodoTag    TodoTag?  @relation(fields: [todoTagId], references: [id])
+  todoTagId  Int?
 }
