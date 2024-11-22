@@ -114,7 +114,7 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
                 <h1 className='font-medium tracking-wider mb-1'>{title}  -   <span className={cn('text-xs tracking-widest text-white p-1 rounded-full', { 'bg-green-400': status == 'finished', 'bg-yellow-400': status == 'ongoing', 'bg-red-500': status == 'failed' })}>{status}</span></h1>
                 <Timer startDate={start} deadline={deadlineConfig} finishedAt={finishedAt} setter={[setIsDeadline, setTodoData]} />
                 <div className="flex absolute top-5 right-3 gap-x-3">
-                    {isDeadline ? '' : status == 'finished' ? <Undo2 size={20} className='cursor-pointer' onClick={redoHandler} /> : <Check size={20} className='cursor-pointer' onClick={finishHandler} />}
+                    {isDeadline || status == 'failed' ? '' : status == 'finished' ? <Undo2 size={20} className='cursor-pointer' onClick={redoHandler} /> : <Check size={20} className='cursor-pointer' onClick={finishHandler} />}
                     <Trash size={20} className='cursor-pointer' onClick={deleteHandler} />
                 </div>
             </div>

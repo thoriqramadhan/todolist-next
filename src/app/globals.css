@@ -92,7 +92,7 @@ body {
   }
 
   /*  */
-  .text-title{
-    @apply inline-block text-4xl font-semibold mb-5
+  .text-title {
+    @apply inline-block text-4xl font-semibold mb-5;
   }
 }

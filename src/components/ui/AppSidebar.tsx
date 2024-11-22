@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from './sidebar';
-import { BookCheck, LayoutDashboard, SmilePlus } from 'lucide-react';
+import { BookCheck, LayoutDashboard, SmilePlus, ClockAlert } from 'lucide-react';
+
 import AppIcon from './AppIcon';
 import Image from 'next/image';
 import AccountSidebar from './AccountSidebar';
@@ -27,6 +28,11 @@ const AppSidebar: FC<AppSidebarProps> = ({ }) => {
                     icon: <BookCheck />,
                     title: 'Finished Todo',
                     link: null
+                },
+                {
+                    icon: <ClockAlert />,
+                    title: 'Deadline Today',
+                    link: '/dashboard/today'
                 }
             ]
         }]

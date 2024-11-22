@@ -33,6 +33,7 @@ const Timer: FC<TimerProps> = ({ startDate, deadline, finishedAt, setter }) => {
             formatFinishedAt()
         }
         if (deadline == 0) {
+            setTimeLeft('Run out of time!')
             return;
         }
         const deadlineDate = new Date(deadline).getTime()

@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import GoogleIcons from '@/components/ui/Icons';
 import { ErrorInput, Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Loading from '@/components/ui/Loading';
+import LoadingComponent from '@/components/ui/LoadingComponent';
 import { login } from '@/lib/action/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -43,7 +43,7 @@ const Page: FC<PageProps> = ({ }) => {
                         {!!formState?.error?.password && <ErrorInput>{formState?.error?.password ?? ''}</ErrorInput>}
                     </CardContent>
                     <CardFooter>
-                        <Button className='w-full disabled:cursor-not-allowed' disabled={isPending} >{isPending ? <Loading /> : 'Login'}</Button>
+                        <Button className='w-full disabled:cursor-not-allowed' disabled={isPending} >{isPending ? <LoadingComponent /> : 'Login'}</Button>
                     </CardFooter>
                 </Card>
             </form>

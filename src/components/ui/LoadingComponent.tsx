@@ -6,8 +6,8 @@ interface LoadingProps extends LucideProps {
     className?: string
 }
 
-const Loading: FC<LoadingProps> = ({ className, ...props }) => {
+const LoadingComponent: FC<LoadingProps> = ({ className, ...props }) => {
     return <Loader2 {...props} className={cn('animate-spin', className)} />
 }
 
-export default Loading;
+export default LoadingComponent;

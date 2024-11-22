@@ -2,7 +2,7 @@
 import Tab, { TabOptions } from '@/components/Tab';
 import { TodoCard } from '@/components/TodoCard';
 import { Card, CardContent } from '@/components/ui/card';
-import Loading from '@/components/ui/Loading';
+import LoadingComponent from '@/components/ui/LoadingComponent';
 import { FC, useEffect, useState } from 'react';
 
 interface PageProps {
@@ -79,7 +79,7 @@ const Page: FC<PageProps> = ({ }) => {
     }, [todo])
     if (loading) {
         return <div className="w-full h-screen flex justify-center items-center">
-            <Loading size={40} />
+            <LoadingComponent size={40} />
         </div>
     }
     return (

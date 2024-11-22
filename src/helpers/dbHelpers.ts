@@ -7,9 +7,9 @@ export async function getUserDB(emailToSearch: string) {
         return false
     }
 }
-export async function getTodoDB() {
+export async function getTodoDB(options) {
     try {
-        return await prisma.todo.findMany()
+        return await prisma.todo.findMany(options)
     } catch (error) {
         console.log(error)
         return false
