@@ -27,7 +27,7 @@ const AppSidebar: FC<AppSidebarProps> = ({ }) => {
                 {
                     icon: <Tag />,
                     title: 'Tags',
-                    link: '/dashboard/tag'
+                    link: '/dashboard/tags'
                 },
                 {
                     icon: <BookCheck />,

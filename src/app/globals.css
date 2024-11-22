@@ -91,8 +91,11 @@ body {
     @apply transition-all duration-300;
   }
 
-  /*  */
+  /* typography */
   .text-title {
     @apply inline-block text-4xl font-semibold mb-5;
+  }
+  .text-subtitle {
+    @apply text-lg font-medium tracking-wider
   }
 }

@@ -37,3 +37,11 @@ export async function updateTodo(id: number , dataObject: object) {
         throw new Error('Failed to update todo!')
     }
 }
+
+export async function getTags() {
+    try {
+        return await prisma.todoTag.findMany() 
+    } catch (error) {
+        throw new Error(JSON.stringify(error))
+    }
+}

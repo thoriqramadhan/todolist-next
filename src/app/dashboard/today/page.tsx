@@ -1,4 +1,4 @@
-import TodoCardContainer from '@/components/client/container';
+import { TodoCardContainer } from '@/components/client/container';
 import { ProgressPercentage } from '@/components/server/card';
 import { getTodoDB } from '@/helpers/dbHelpers';
 import { FC } from 'react';
