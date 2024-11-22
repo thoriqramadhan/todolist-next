@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from './sidebar';
-import { BookCheck, LayoutDashboard, SmilePlus, ClockAlert } from 'lucide-react';
+import { BookCheck, LayoutDashboard, SmilePlus, ClockAlert, Tag } from 'lucide-react';
 
 import AppIcon from './AppIcon';
 import Image from 'next/image';
@@ -23,6 +23,11 @@ const AppSidebar: FC<AppSidebarProps> = ({ }) => {
                     icon: <SmilePlus />,
                     title: 'Add Todo',
                     link: '/dashboard/add'
+                },
+                {
+                    icon: <Tag />,
+                    title: 'Tags',
+                    link: '/dashboard/tag'
                 },
                 {
                     icon: <BookCheck />,
