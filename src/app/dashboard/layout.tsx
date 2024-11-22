@@ -1,5 +1,6 @@
 import AppSidebar from '@/components/ui/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/toaster';
 import { FC } from 'react';
 
 interface LayoutProps {
@@ -15,6 +16,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
                 {children}
             </main>
+            <Toaster />
         </SidebarProvider>
     </>;
 }

@@ -27,6 +27,8 @@ export async function createTag(formData: FormData) {
             if (error.code == 'P2002') {
                 return {message: `Tag name is duplicate!` , status: 400}
             }
+        } else {
+            return {message: `Failed to create tags` , status: 400}
         }
     }
 }

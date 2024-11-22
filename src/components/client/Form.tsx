@@ -5,17 +5,25 @@ import { Button } from "../ui/button"
 import { ErrorInput, Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { createTag } from "@/lib/action/tag"
+import { useToast } from "@/hooks/use-toast"
 
 export function TagForm() {
     const [errorMsg, setErrorMsg] = useState('')
+    const { toast } = useToast()
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         const formData = new FormData(e.currentTarget);
-
+        const name = (e.currentTarget.elements.namedItem('name')) as HTMLInputElement
+        setErrorMsg('')
         const response = await createTag(formData);
         if (response?.status == 400) {
             setErrorMsg(response.message)
             return;
+        } else {
+            name.value = ''
+            toast({
+                title: 'Success Adding Tags'
+            })
         }
     }
     return (
