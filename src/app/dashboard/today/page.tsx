@@ -1,4 +1,5 @@
-import TodoCardContainer from '@/components/client/TodoCardContainer';
+import TodoCardContainer from '@/components/client/container';
+import { ProgressPercentage } from '@/components/server/card';
 import { getTodoDB } from '@/helpers/dbHelpers';
 import { FC } from 'react';
 
@@ -18,12 +19,13 @@ const Page: FC<PageProps> = async ({ }) => {
             }
         }
     }
-    const todayDatas = await getTodoDB(todayDeadlinesQuery)
-    console.log(todayDatas);
+
+    const todayDeadlineDatas = await getTodoDB(todayDeadlinesQuery)
+    console.log(todayDeadlineDatas);
 
     return <>
         <p className='text-title'>Todays Deadline</p>
-        <TodoCardContainer />
+        <TodoCardContainer todos={todayDeadlineDatas} />
     </>
 }
 

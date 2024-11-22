@@ -12,13 +12,12 @@ interface TodoCardProps {
         start: Date,
         deadline: Date,
         finishedAt: Date | null,
-        endDate: Date | null
     },
     setter: Dispatch<SetStateAction<never[]>>
 }
 export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
     const [TodoData, setTodoData] = useState(todo)
-    const { id, status, title, start, deadline, endDate, finishedAt } = TodoData;
+    const { id, status, title, start, deadline, finishedAt } = TodoData;
     const deadlineConfig = status == 'failed' ? 0 : deadline;
     const [isDeadline, setIsDeadline] = useState(false)
     async function deleteHandler() {
@@ -109,14 +108,12 @@ export const TodoCard: FC<TodoCardProps> = ({ todo, setter }) => {
         }
     }, [isDeadline])
     return (
-        <div className="w-full">
-            <div className="w-full h-28 bg-gra-50 shadow-md p-3 rounded-lg border relative">
-                <h1 className='font-medium tracking-wider mb-1'>{title}  -   <span className={cn('text-xs tracking-widest text-white p-1 rounded-full', { 'bg-green-400': status == 'finished', 'bg-yellow-400': status == 'ongoing', 'bg-red-500': status == 'failed' })}>{status}</span></h1>
-                <Timer startDate={start} deadline={deadlineConfig} finishedAt={finishedAt} setter={[setIsDeadline, setTodoData]} />
-                <div className="flex absolute top-5 right-3 gap-x-3">
-                    {isDeadline || status == 'failed' ? '' : status == 'finished' ? <Undo2 size={20} className='cursor-pointer' onClick={redoHandler} /> : <Check size={20} className='cursor-pointer' onClick={finishHandler} />}
-                    <Trash size={20} className='cursor-pointer' onClick={deleteHandler} />
-                </div>
+        <div className="w-full h-28 bg-gra-50 shadow-md p-3 rounded-lg border relative bg-white">
+            <h1 className='font-medium tracking-wider mb-1'>{title}  -   <span className={cn('text-xs tracking-widest text-white p-1 rounded-full', { 'bg-green-400': status == 'finished', 'bg-yellow-400': status == 'ongoing', 'bg-red-500': status == 'failed' })}>{status}</span></h1>
+            <Timer startDate={start} deadline={deadlineConfig} finishedAt={finishedAt} setter={[setIsDeadline, setTodoData]} />
+            <div className="flex absolute top-5 right-3 gap-x-3">
+                {isDeadline || status == 'failed' ? '' : status == 'finished' ? <Undo2 size={20} className='cursor-pointer' onClick={redoHandler} /> : <Check size={20} className='cursor-pointer' onClick={finishHandler} />}
+                <Trash size={20} className='cursor-pointer' onClick={deleteHandler} />
             </div>
         </div>
     )
