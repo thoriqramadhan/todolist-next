@@ -34,6 +34,6 @@ export async function updateTodo(id: number , dataObject: object) {
             data: dataObject
         })
     } catch (error) {
-        
+        throw new Error('Failed to update todo!')
     }
 }

@@ -86,11 +86,11 @@ const Page: FC<PageProps> = ({ }) => {
         <>
             <p className='text-title'>Dashboard</p>
             <div className='flex-1'>
-                <div className="flex w-full gap-x-5">
+                <div className="flex w-full gap-x-5 overflow-x-auto">
                     <StaticCard title='Task Finished' value={countStatus.finished} />
                     <StaticCard title='Task Ongoing' value={countStatus.ongoing} />
+                    <ProgressPercentage data={todo} />
                 </div>
-                <ProgressPercentage data={todo} />
                 <Tab className='select-none'>
                     {
                         tabData.map((tab, index) => (
@@ -100,11 +100,11 @@ const Page: FC<PageProps> = ({ }) => {
                 </Tab>
                 <div className="space-y-5" key={1}>
                     {
-                        todo.map(data => {
+                        todo.map((data, index) => {
                             if (data.status.toLowerCase() == currentTab) {
-                                return <TodoCard key={data.title} todo={data} setter={setTodo} />
+                                return <TodoCard key={`todo-${index}-${+new Date()}`} todo={data} setter={setTodo} />
                             } else if (currentTab === 'all') {
-                                return <TodoCard key={data.title} todo={data} setter={setTodo} />
+                                return <TodoCard key={`todo-${index}-${+new Date()}`} todo={data} setter={setTodo} />
                             }
                         })
                     }
@@ -132,8 +132,8 @@ function ProgressPercentage({ data }: { data: TodoData[] }) {
                 <p className='font-medium tracking-wider'>Task Finished</p>
                 <p className='text-2xl font-bold tracking-wide'>{finishPercentage}%</p>
                 <div className="w-full rounded-full overflow-hidden h-[3px] flex">
-                    <div className=" h-[3px] bg-blue-600 inline-block" style={{ width: `${finishPercentage}%` }}></div>
-                    <div className=" h-[3px] bg-gray-50 inline-block" style={{ width: `${unfinishedPercentage}%` }}></div>
+                    <div className=" h-[3px] transition-300 bg-blue-600 inline-block" style={{ width: `${finishPercentage}%` }}></div>
+                    <div className=" h-[3px] transition-300 bg-gray-50 inline-block" style={{ width: `${unfinishedPercentage}%` }}></div>
                 </div>
             </CardContent>
         </Card>

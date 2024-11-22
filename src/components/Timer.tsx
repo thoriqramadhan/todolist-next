@@ -4,11 +4,13 @@ import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 
 interface TimerProps {
     startDate: Date,
-    deadline: Date,
-    finishedAt: Date
+    deadline: Date | number,
+    finishedAt: Date | null,
+    setter?: [Dispatch<SetStateAction<boolean>>, Dispatch<SetStateAction<Todo>>];
 }
 
-const Timer: FC<TimerProps> = ({ startDate, deadline, finishedAt }) => {
+const Timer: FC<TimerProps> = ({ startDate, deadline, finishedAt, setter }) => {
+    const [setter1, setter2] = setter
     const [timeLeft, setTimeLeft] = useState("")
     const [isFinished, setisFinished] = useState('')
     const classInit = 'text-xs mt-2'
@@ -30,13 +32,27 @@ const Timer: FC<TimerProps> = ({ startDate, deadline, finishedAt }) => {
         if (finishedAt) {
             formatFinishedAt()
         }
+        if (deadline == 0) {
+            return;
+        }
         const deadlineDate = new Date(deadline).getTime()
+        console.log(deadlineDate);
+
         const interval = setInterval(() => {
             const now = new Date().getTime()
             const difference = deadlineDate - now;
             if (difference <= 0) {
                 clearInterval(interval)
-                setTimeLeft('00:00:00')
+                console.log('in cuh');
+
+                setTimeLeft('Run out of time!')
+                setter1!(true)
+                setter2((prev) => {
+                    return {
+                        ...prev,
+                        status: 'failed'
+                    }
+                })
                 return;
             }
             const day = Math.floor(difference / (1000 * 60 * 60 * 24))

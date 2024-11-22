@@ -7,3 +7,12 @@ interface TodoData {
     title: string
     userId: number
 }
+interface Todo {
+    id?: number,
+        status: string,
+        title: string,
+        start: Date,
+        deadline: Date,
+        finishedAt: Date | null,
+        endDate: Date | null
+}
