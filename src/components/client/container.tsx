@@ -4,10 +4,9 @@ import { TodoCard } from '../TodoCard';
 import { ProgressPercentage } from '../server/card';
 import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
 import { SelectGroup } from '@radix-ui/react-select';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { TagForm } from './Form';
+import { Trash2, PencilIcon } from 'lucide-react';
 
 interface TodoCardContainerProps {
 
@@ -33,9 +32,11 @@ interface TagsContainerProps {
 
 export const TagsContainer: FC<TagsContainerProps> = ({ tagsData }) => {
     const [tags, setTags] = useState(tagsData);
-    function selectHandler(value) {
-        console.log(value);
+    const [selectedTag, setSelectedTag] = useState('')
+    console.log(tags);
 
+    function selectHandler(value) {
+        setSelectedTag(value)
     }
     return <>
         <div className="w-full space-y-5"
@@ -51,18 +52,35 @@ export const TagsContainer: FC<TagsContainerProps> = ({ tagsData }) => {
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>Tags</SelectLabel>
-                                    <SelectItem value='test' >test1</SelectItem>
-                                    <SelectItem value='tes2' >test2</SelectItem>
+                                    {tags.map(tag => (
+                                        <SelectItem key={tag.id} value={tag.name}>{tag.name}</SelectItem>
+                                    ))}
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
                         <div className='w-full flex gap-3 flex-wrap overflow-y-auto max-h-[200px]'>
-                            <span className='inline-block text-sm tracking-wider text-zinc-500 px-3 py-1 rounded-lg shadow-sm border bg-white cursor-pointer transition-300 hover:font-semibold'>Sports</span>
+                            {tags.map(tag => (
+                                <span key={tag.id} className='inline-block text-sm tracking-wider text-zinc-500 px-3 py-1 rounded-lg shadow-sm border bg-white cursor-pointer transition-300 hover:font-semibold'>{tag.name}</span>
+                            ))}
                         </div>
+                        <p className='text-description'>Click the tag to see todos with the relative tag!.</p>
                     </>
                 )}
 
             </div>
+            {selectedTag &&
+                <div className="w-full">
+                    <h2 className='text-subtitle'>Selected Tags To Edit</h2>
+                    <section className='w-full flex py-1 transition-300 hover:bg-zinc-100 justify-between items-center'>
+                        <p>{selectedTag}</p>
+
+                        <span className='flex gap-x-2'>
+                            <Button><PencilIcon /></Button>
+                            <Button><Trash2 /></Button>
+                        </span>
+                    </section>
+                </div>
+            }
             <TagForm />
         </div>
     </>
