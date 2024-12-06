@@ -1,8 +1,10 @@
 'use client'
 import Tab, { TabOptions } from '@/components/Tab';
 import { TodoCard } from '@/components/TodoCard';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import LoadingComponent from '@/components/ui/LoadingComponent';
+import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 
 interface PageProps {
@@ -71,6 +73,23 @@ const Page: FC<PageProps> = ({ }) => {
             setLoading(false)
         }
     }
+    async function flushAllData() {
+        setLoading(true)
+        try {
+            const response = await fetch('/api/delete/all', {
+                method: 'POST'
+            })
+            if (!response.ok) {
+                throw new Error(response.status)
+            }
+            window.location.reload(true);
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            setLoading(false)
+        }
+    }
     useEffect(() => {
         fetchTodo()
     }, [])
@@ -91,13 +110,16 @@ const Page: FC<PageProps> = ({ }) => {
                     <StaticCard title='Task Ongoing' value={countStatus.ongoing} />
                     <ProgressPercentage data={todo} />
                 </div>
-                <Tab className='select-none'>
-                    {
-                        tabData.map((tab, index) => (
-                            <TabOptions isSelected={tab.isSelected} key={`${tab.title}-${index}`} onClick={() => handleTab(index)}>{tab.title}</TabOptions>
-                        ))
-                    }
-                </Tab>
+                <div className="w-full flex justify-between">
+                    <Tab className='select-none'>
+                        {
+                            tabData.map((tab, index) => (
+                                <TabOptions isSelected={tab.isSelected} key={`${tab.title}-${index}`} onClick={() => handleTab(index)}>{tab.title}</TabOptions>
+                            ))
+                        }
+                    </Tab>
+                    <Button color='#CD0000' onClick={flushAllData}>Flushall</Button>
+                </div>
                 <div className="space-y-5" key={1}>
                     {
                         todo.map((data, index) => {
