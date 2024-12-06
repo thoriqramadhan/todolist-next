@@ -45,3 +45,23 @@ export async function getTags() {
         throw new Error(JSON.stringify(error))
     }
 }
+
+export async function getTag(identifier: string | number) {
+    try {
+        if (typeof identifier === typeof '') {
+            return await prisma.todoTag.findFirst({
+                where: {
+                name: identifier
+            }})
+        } else {
+            return await prisma.todoTag.findFirst({
+                where: {
+                id: identifier
+            }})
+        }
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+        return {status: 404 , message: 'Failed to fetch tags!'}
+    }
+}
