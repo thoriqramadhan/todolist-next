@@ -11,6 +11,7 @@ export async function middleware(req: NextRequest) {
     const user = await decryptSession(session?.value)
 
     const isInPublicRoute = pathname.includes(publicRoute[0]) || pathname.includes(publicRoute[1])
+    const isInRootRoute = pathname == '/';
 
     if (!user && !isInPublicRoute) {
         return NextResponse.redirect(new URL('/login' , req.nextUrl))
@@ -18,7 +19,9 @@ export async function middleware(req: NextRequest) {
     if (user && isInPublicRoute) {
         return NextResponse.redirect(new URL('/dashboard' , req.nextUrl))
     }
-
+    if (isInRootRoute) {
+        return NextResponse.redirect(new URL('/dashboard' , req.nextUrl))
+    }
     return NextResponse.next();
     // Lakukan pengalihan untuk semua route 
 }
