@@ -1,5 +1,5 @@
 'use client'
-import { FC, useRef, useState } from 'react';
+import { ChangeEvent, Dispatch, FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { TodoCard } from '../TodoCard';
 import { ProgressPercentage } from '../server/card';
 import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
@@ -7,6 +7,8 @@ import { SelectGroup } from '@radix-ui/react-select';
 import { Button } from '../ui/button';
 import { TagForm } from './Form';
 import { Trash2, PencilIcon } from 'lucide-react';
+import { updateTag } from '@/lib/action/tag';
+import { TagsItem } from './item';
 
 interface TodoCardContainerProps {
 
@@ -14,12 +16,15 @@ interface TodoCardContainerProps {
 
 export const TodoCardContainer = ({ todos }) => {
     const [todoDatas, setTodoDatas] = useState(todos)
+
     return (
         <>
             <div className='w-full h-fit space-y-5'>
-                <ProgressPercentage data={todoDatas} />
+                {todoDatas.length > 0 &&
+                    <ProgressPercentage data={todoDatas} />
+                }
                 {todoDatas.map((todo, index) => (
-                    <TodoCard todo={todo} key={`${todo.title}-${index}-${+new Date()}`} setter={setTodoDatas} />
+                    <TodoCard todo={todo} key={`${todo.title}-${index}`} setter={setTodoDatas} />
                 ))}
             </div>
         </>
@@ -33,7 +38,6 @@ interface TagsContainerProps {
 export const TagsContainer: FC<TagsContainerProps> = ({ tagsData }) => {
     const [tags, setTags] = useState(tagsData);
     const [selectedTag, setSelectedTag] = useState('')
-    console.log(tags);
 
     function selectHandler(value) {
         setSelectedTag(value)
@@ -69,17 +73,7 @@ export const TagsContainer: FC<TagsContainerProps> = ({ tagsData }) => {
 
             </div>
             {selectedTag &&
-                <div className="w-full">
-                    <h2 className='text-subtitle'>Selected Tags To Edit</h2>
-                    <section className='w-full flex py-1 transition-300 hover:bg-zinc-100 justify-between items-center'>
-                        <p>{selectedTag}</p>
-
-                        <span className='flex gap-x-2'>
-                            <Button><PencilIcon /></Button>
-                            <Button><Trash2 /></Button>
-                        </span>
-                    </section>
-                </div>
+                <TagsItem selectedTag={selectedTag} setter={[setSelectedTag, setTags]} containerData={tags} />
             }
             <TagForm />
         </div>
