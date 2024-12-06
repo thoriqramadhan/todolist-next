@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { prisma } from "../db";
-import { decryptSession } from "../session";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export async function createTag(formData: FormData) {
@@ -30,5 +29,25 @@ export async function createTag(formData: FormData) {
         } else {
             return {message: `Failed to create tags` , status: 400}
         }
+    }
+}
+
+export async function updateTag(tags:[string , string]) {
+    if (!tags) {
+        throw new Error('Invalid payload!');
+    }
+    try {
+        await prisma.todoTag.update({
+            where: {
+                name:tags[0]
+            },
+            data: {
+                name:tags[1]
+            }
+        })
+        console.log('success')
+    } catch (error) {
+        console.log(error)
+        throw new Error('Failed to update!')
     }
 }
